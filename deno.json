@@ -1,6 +1,6 @@
 {
   "name": "@rivet-gg/esbuild-deno-loader",
-  "version": "0.10.3-fork.1",
+  "version": "0.10.3-fork.2",
   "exports": {
     ".": "./mod.ts",
     "./esbuild_types": "./src/esbuild_types.ts"
