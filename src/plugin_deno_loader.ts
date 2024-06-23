@@ -252,7 +252,11 @@ export function denoLoaderPlugin(
                 external: true,
               };
             } else {
-              return undefined;
+              return await build.resolve("node:" + args.path, {
+                kind: args.kind,
+                resolveDir: args.resolveDir,
+                importer: args.importer,
+              });
             }
           }
           if (nodeModulesDir) {
