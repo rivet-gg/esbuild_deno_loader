@@ -378,9 +378,16 @@ export function expandEmbeddedImportMap(importMap: ImportMap) {
 const SLASH_NODE_MODULES_SLASH = `${SEPARATOR}node_modules${SEPARATOR}`;
 const SLASH_NODE_MODULES = `${SEPARATOR}node_modules`;
 
+
+// HACK: Prevent attempting to resolve polyfilled files from the node modules
+// polyfill as NPM dependencies
+//
+// This happens when using vendor with Deno.
+const SLASH_ESBUILD_PLUGINS_NODE_MODULES_POLYFILL_SLASH = `${SEPARATOR}esbuild-plugins-node-modules-polyfill${SEPARATOR}`;
+
 export function isInNodeModules(path: string): boolean {
-  return path.includes(SLASH_NODE_MODULES_SLASH) ||
-    path.endsWith(SLASH_NODE_MODULES);
+  return (path.includes(SLASH_NODE_MODULES_SLASH) ||
+    path.endsWith(SLASH_NODE_MODULES)) && !path.includes(SLASH_ESBUILD_PLUGINS_NODE_MODULES_POLYFILL_SLASH);
 }
 
 export function isNodeModulesResolution(args: esbuild.OnResolveArgs) {
